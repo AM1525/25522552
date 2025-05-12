@@ -1,0 +1,352 @@
+# programming02
+
+//main
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//workable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Employee
+public abstract class Employee implements Workable{
+
+protected String name;
+private int id;
+private double salary;
+
+public Employee(){
+}
+
+ public Employee(String name, int id, double salary) {
+  this.name = name;
+  this.id = id;
+  this.salary = salary;
+    }
+
+
+ public String getName(){
+ return name;
+ }
+ public void setName(String name){
+    this.name = name;
+    }
+
+
+ public int getId(){ 
+    return id;
+    }
+ public void setId(int id){ 
+ this.id = id; 
+ }
+
+
+ public double getSalary(){
+ return salary; 
+ }
+ public void setSalary(double salary){
+ this.salary = salary;
+ }
+
+ public String toString() {
+        return "Name: " + name + ", ID: " + id + ", Salary: " + salary;
+    }
+
+
+public boolean equals(Object obj) {
+    if (this == obj) return true;
+    if (obj == null || getClass() != obj.getClass()) return false;
+    Employee other = (Employee) obj;
+    return this.id == other.id;
+}
+@Override
+ public abstract double calculateBonus();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Manager
+public class manager extends Employee {
+    
+ private String department;
+ private int teamSize;
+
+  public manager() {
+      
+      super("",0,0.0);
+      this.department=null;
+      this.teamSize=0;
+  }
+  
+
+    public manager(String name, int id, double salary, String department ,int teamSize) {
+        super(name, id, salary);
+       this.department=department;
+      this.teamSize=teamSize;  
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public int getTeamSize() {
+        return teamSize;
+    }
+
+    public void setTeamSize(int teamSize) {
+        this.teamSize = teamSize;
+    }
+
+    @Override
+    public double calculateBonus(){
+        return getSalary()*0.15 + teamSize *100;
+        
+    }
+    @Override
+    public void work(){
+        System.out.println(getName() + " is managing a team");
+    }
+    
+    @Override
+    public void attendMeeting(){
+        System.out.println(getName() + " is  attending a management meeting");
+    }
+    
+    @Override
+    public String toString(){
+      return super.toString() + ", Department " + department + ", Team Size : " + teamSize;
+    }
+    
+
+}
+
+
+//Developer
+
+
+public class Developer extends Employee implements Workable {
+
+    private String programmingLanguage;
+    private String level;
+
+    public Developer() {
+        programmingLanguage = "null";
+        level = "null";
+    }
+
+    public Developer(int id, String name, double salary, String programmingLanguage, String level) {
+        super(id, name, salary);
+        this.programmingLanguage = programmingLanguage;
+        this.level = level;
+
+    }
+
+    public String getProgrammingLanguage() {
+        return programmingLanguage;
+    }
+
+    public void setProgrammingLanguage(String programmingLanguage) {
+        this.programmingLanguage = programmingLanguage;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    @Override
+    public double calculateBonus() {
+    return getSalary()*0.1+(level.equals("senior")?1000:500);
+    }
+
+    public void Work() {
+        System.out.println(getName() + "is writing code in " + programmingLanguage);
+    }
+
+    public void attendMeeting() {
+        System.out.println(getName() + "is attending a developer meeting.");
+    }
+
+    @Override
+    public String toString() {
+        return "Developer{" + "programmingLanguage=" + programmingLanguage + ", level=" + level + '}';
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//project
+
+import java.util.ArrayList;
+
+public class Project {
+private String projectName;
+private String deadline;
+private double budget;
+private ArrayList<Employee> employees; 
+
+public Project() {
+    this.projectName = "";
+    this.deadline = "";
+    this.budget = 0.0;
+    this.employees = new ArrayList<>();
+}
+ public Project(String projectName, double budget, String deadline) {
+ this.projectName = projectName;
+ this.budget = budget;
+ this.deadline = deadline;
+ this.employees = new ArrayList<>();
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+    
+    
+public void addEmployee(Employee e){
+    employees.add(e);
+}
+
+public boolean removeEmployee(int id){
+    for (int i = 0; i< employees.size(); i++){
+    if (employees.get(i).getId() == id){
+        employees.remove(i);
+        return true;
+    }
+}
+    return false;
+}
+
+public Employee findEmployee (int id){
+  for (int i = 0; i< employees.size(); i++){
+    if (employees.get(i).getId() == id){
+        return employees.get(i);
+    }
+}
+    return null;   
+}
+
+    @Override
+    public String toString() {
+        return "Project{" + "projectName=" + projectName + ", deadline=" + deadline + ", budget=" + budget + ", employees=" + employees + '}';
+    }
+
+    public void display(){
+      System.out.println("Project name: " + projectName);
+      System.out.println("Deadline: " + deadline);
+      System.out.println("Budget: " + budget);
+      System.out.println("Employees: " + employees);
+            System.out.println("Project's employee list:");
+      for (Employee e : employees)
+          System.out.println(e);
+  }
+
+}
