@@ -1,0 +1,121 @@
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.Stage;
+
+public class MenuScreen {
+    private VBox layout;
+    private Stage stage;
+
+    public MenuScreen(Stage stage) {
+        this.stage = stage;
+        layout = new VBox(15);
+        layout.setStyle("-fx-padding: 20;");
+
+        Button addBtn = new Button("Add Employee");
+        Button deleteBtn = new Button("Delete Employee");
+        Button searchBtn = new Button("Search");
+        Button compareBtn = new Button("Compare Employees");
+        Button displayBtn = new Button("Display All Employees");
+
+        addBtn.setOnAction(e -> showAddEmployeeScreen());
+        deleteBtn.setOnAction(e -> showDeleteEmployeeScreen());
+        searchBtn.setOnAction(e -> showSearchScreen());
+        compareBtn.setOnAction(e -> showCompareScreen());
+        displayBtn.setOnAction(e -> showDisplayScreen());
+
+        layout.getChildren().addAll(
+            new Label("Main Menu"),
+            addBtn, deleteBtn, searchBtn, compareBtn, displayBtn
+        );
+    }
+
+    public VBox getView() {
+        return layout;
+    }
+
+    private void showAddEmployeeScreen() {
+        VBox pane = new VBox(10);
+        TextField name = new TextField();
+        name.setPromptText("Name");
+        TextField id = new TextField();
+        id.setPromptText("ID");
+        TextField salary = new TextField();
+        salary.setPromptText("Salary");
+        Button submit = new Button("Submit");
+        Label msg = new Label();
+        submit.setOnAction(e -> msg.setText("Employee " + name.getText() + " added."));
+
+        pane.getChildren().addAll(new Label("Add Employee"), name, id, salary, submit, msg);
+        Stage s = new Stage();
+        s.setScene(new Scene(pane, 300, 250));
+        s.setTitle("Add Employee");
+        s.show();
+    }
+
+    private void showDeleteEmployeeScreen() {
+        VBox pane = new VBox(10);
+        TextField id = new TextField();
+        id.setPromptText("Enter ID");
+        Button delete = new Button("Delete");
+        Label msg = new Label();
+        delete.setOnAction(e -> msg.setText("Employee with ID " + id.getText() + " deleted."));
+
+        pane.getChildren().addAll(new Label("Delete Employee"), id, delete, msg);
+        Stage s = new Stage();
+        s.setScene(new Scene(pane, 300, 200));
+        s.setTitle("Delete Employee");
+        s.show();
+    }
+
+    private void showSearchScreen() {
+        VBox pane = new VBox(10);
+        TextField id = new TextField();
+        id.setPromptText("Enter ID");
+        Button search = new Button("Search");
+        Label msg = new Label();
+        search.setOnAction(e -> msg.setText("Found employee with ID: " + id.getText()));
+
+        pane.getChildren().addAll(new Label("Search Employee"), id, search, msg);
+        Stage s = new Stage();
+        s.setScene(new Scene(pane, 300, 200));
+        s.setTitle("Search Employee");
+        s.show();
+    }
+
+    private void showCompareScreen() {
+        VBox pane = new VBox(10);
+        TextField id1 = new TextField();
+        id1.setPromptText("Enter first ID");
+        TextField id2 = new TextField();
+        id2.setPromptText("Enter second ID");
+        Button compare = new Button("Compare");
+        Label result = new Label();
+        compare.setOnAction(e -> {
+            if (id1.getText().equals(id2.getText())) {
+                result.setText("Same IDs (equal)");
+            } else {
+                result.setText("Different IDs (not equal)");
+            }
+        });
+
+        pane.getChildren().addAll(new Label("Compare Employees"), id1, id2, compare, result);
+        Stage s = new Stage();
+        s.setScene(new Scene(pane, 300, 250));
+        s.setTitle("Compare Employees");
+        s.show();
+    }
+
+    private void showDisplayScreen() {
+        VBox pane = new VBox(10);
+        TextArea area = new TextArea();
+        area.setText("Employee 1: Simulated Data\nEmployee 2: Simulated Data");
+        area.setEditable(false);
+
+        pane.getChildren().addAll(new Label("All Employees"), area);
+        Stage s = new Stage();
+        s.setScene(new Scene(pane, 300, 250));
+        s.setTitle("Display All Employees");
+        s.show();
+    }
+}
